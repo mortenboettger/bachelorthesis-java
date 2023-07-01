@@ -2,9 +2,7 @@ package io.mboettger.bachelorthesis.persistence.memory;
 
 import io.mboettger.bachelorthesis.domain.DomainModel;
 import io.mboettger.bachelorthesis.persistence.gateway.ReadWriteGateway;
-import io.mboettger.bachelorthesis.persistence.memory._helper.PersistenceHelper;
 import io.mboettger.bachelorthesis.persistence.memory.entity.EntityModel;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -77,9 +75,7 @@ abstract class ReadWriteGatewayImpl<T extends DomainModel, E extends EntityModel
 
     @Override
     public boolean exists(String id) {
-        if (id == null) {
-            throw new IllegalArgumentException("Data should not bu null");
-        }
+        throwIfNull(id);
 
         return findOne(id) != null;
     }

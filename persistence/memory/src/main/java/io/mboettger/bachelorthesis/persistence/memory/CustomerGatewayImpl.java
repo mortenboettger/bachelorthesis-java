@@ -3,13 +3,8 @@ package io.mboettger.bachelorthesis.persistence.memory;
 import io.mboettger.bachelorthesis.domain.customer.*;
 import io.mboettger.bachelorthesis.domain.customer.address.*;
 import io.mboettger.bachelorthesis.persistence.gateway.CustomerGateway;
-import io.mboettger.bachelorthesis.persistence.memory._helper.PersistenceHelper;
 import io.mboettger.bachelorthesis.persistence.memory.entity.CustomerEntity;
-import jakarta.persistence.Persistence;
 import org.hibernate.SessionFactory;
-
-import java.util.Arrays;
-import java.util.stream.Stream;
 
 import static io.mboettger.bachelorthesis.persistence.memory._helper.PersistenceHelper.throwIfNull;
 
@@ -62,17 +57,12 @@ public class CustomerGatewayImpl extends ReadWriteGatewayImpl<Customer, Customer
         var entity = withTransaction(session -> queryWithCriteria(session, criteriaQuery -> {
             var root = criteriaQuery.from(entityClass);
             return criteriaQuery.where(
-                    root.get("emailAddress").in(emailAddress.value())
+                    root.get("emailAddress").in(emailAddress.value()) // no reflection possible
             );
         })).getResultList().stream().findFirst().orElse(null);
 
         if (entity != null) {
             return toDomain(entity);
         } else return null;
-    }
-
-    @Override
-    public Stream<Customer> findByAddress(Address address) {
-        return null;
     }
 }
