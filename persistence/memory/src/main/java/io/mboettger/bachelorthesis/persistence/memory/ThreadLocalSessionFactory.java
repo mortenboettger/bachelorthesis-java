@@ -3,7 +3,9 @@ package io.mboettger.bachelorthesis.persistence.memory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-class ThreadLocalSessionFactory {
+final class ThreadLocalSessionFactory {
+
+    private ThreadLocalSessionFactory() { }
     private static final ThreadLocal<Session> currentSession = new ThreadLocal<>();
 
     public static Session getOrCreate(SessionFactory sessionFactory) {

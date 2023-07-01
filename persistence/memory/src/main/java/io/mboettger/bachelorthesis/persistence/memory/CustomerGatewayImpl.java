@@ -3,15 +3,19 @@ package io.mboettger.bachelorthesis.persistence.memory;
 import io.mboettger.bachelorthesis.domain.customer.*;
 import io.mboettger.bachelorthesis.domain.customer.address.*;
 import io.mboettger.bachelorthesis.persistence.gateway.CustomerGateway;
+import io.mboettger.bachelorthesis.persistence.memory._helper.PersistenceHelper;
 import io.mboettger.bachelorthesis.persistence.memory.entity.CustomerEntity;
-import jakarta.persistence.EntityManager;
+import jakarta.persistence.Persistence;
 import org.hibernate.SessionFactory;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
+import static io.mboettger.bachelorthesis.persistence.memory._helper.PersistenceHelper.throwIfNull;
+
 public class CustomerGatewayImpl extends ReadWriteGatewayImpl<Customer, CustomerEntity> implements CustomerGateway {
-    public CustomerGatewayImpl(EntityManager entityManager, SessionFactory sessionFactory) {
-        super(entityManager, sessionFactory, CustomerEntity.class);
+    public CustomerGatewayImpl(SessionFactory sessionFactory) {
+        super(sessionFactory, CustomerEntity.class);
     }
 
     @Override
@@ -53,7 +57,18 @@ public class CustomerGatewayImpl extends ReadWriteGatewayImpl<Customer, Customer
 
     @Override
     public Customer findByEmail(EmailAddress emailAddress) {
-        return null;
+        throwIfNull(emailAddress);
+
+        var entity = withTransaction(session -> queryWithCriteria(session, criteriaQuery -> {
+            var root = criteriaQuery.from(entityClass);
+            return criteriaQuery.where(
+                    root.get("emailAddress").in(emailAddress.value())
+            );
+        })).getResultList().stream().findFirst().orElse(null);
+
+        if (entity != null) {
+            return toDomain(entity);
+        } else return null;
     }
 
     @Override

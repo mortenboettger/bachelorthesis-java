@@ -77,9 +77,6 @@ public class CustomerEntity extends EntityModel {
     )
     private String emailAddress;
 
-    public CustomerEntity() {
-    }
-
     public String getFirstName() {
         return firstName;
     }

@@ -2,6 +2,7 @@ package io.mboettger.bachelorthesis.persistence.memory;
 
 import io.mboettger.bachelorthesis.domain.DomainModel;
 import io.mboettger.bachelorthesis.persistence.gateway.ReadWriteGateway;
+import io.mboettger.bachelorthesis.persistence.memory._helper.PersistenceHelper;
 import io.mboettger.bachelorthesis.persistence.memory.entity.EntityModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -13,14 +14,14 @@ import org.hibernate.SessionFactory;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import static io.mboettger.bachelorthesis.persistence.memory._helper.PersistenceHelper.throwIfNull;
+
 abstract class ReadWriteGatewayImpl<T extends DomainModel, E extends EntityModel> implements ReadWriteGateway<T> {
 
-    private final EntityManager entityManager;
-    private final SessionFactory sessionFactory;
-    private final Class<E> entityClass;
+    protected final SessionFactory sessionFactory;
+    protected final Class<E> entityClass;
 
-    public ReadWriteGatewayImpl(EntityManager entityManager, SessionFactory sessionFactory, Class<E> entityClass) {
-        this.entityManager = entityManager;
+    protected ReadWriteGatewayImpl(SessionFactory sessionFactory, Class<E> entityClass) {
         this.sessionFactory = sessionFactory;
         this.entityClass = entityClass;
     }
@@ -31,9 +32,7 @@ abstract class ReadWriteGatewayImpl<T extends DomainModel, E extends EntityModel
 
     @Override
     public T findOne(String id) {
-        if (id == null) {
-            throw new IllegalArgumentException("Data should not bu null");
-        }
+        throwIfNull(id);
 
         var entity = withTransaction(session -> session.find(entityClass, id));
         if (entity != null) {
@@ -48,9 +47,7 @@ abstract class ReadWriteGatewayImpl<T extends DomainModel, E extends EntityModel
 
     @Override
     public T save(T data) {
-        if (data == null) {
-            throw new IllegalArgumentException("Data should not bu null");
-        }
+        throwIfNull(data);
 
         var entity = withTransaction(session -> session.merge(toEntity(data)));
         if (entity != null) {
@@ -60,9 +57,7 @@ abstract class ReadWriteGatewayImpl<T extends DomainModel, E extends EntityModel
 
     @Override
     public void delete(String id) {
-        if (id == null) {
-            throw new IllegalArgumentException("ID should not bu null");
-        }
+        throwIfNull(id);
 
         withTransaction(session -> {
             var entity = findOne(id);
@@ -75,9 +70,7 @@ abstract class ReadWriteGatewayImpl<T extends DomainModel, E extends EntityModel
 
     @Override
     public void delete(T data) {
-        if (data == null) {
-            throw new IllegalArgumentException("Data should not bu null");
-        }
+        throwIfNull(data);
 
         delete(data.getId());
     }

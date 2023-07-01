@@ -15,7 +15,8 @@
             <option value="$PROJECT_DIR$/persistence/memory" />
             <option value="$PROJECT_DIR$/starter" />
             <option value="$PROJECT_DIR$/usecase" />
-            <option value="$PROJECT_DIR$/usecase-boundary" />
+            <option value="$PROJECT_DIR$/usecase/boundary" />
+            <option value="$PROJECT_DIR$/usecase/impl" />
             <option value="$PROJECT_DIR$/web" />
           </set>
         </option>

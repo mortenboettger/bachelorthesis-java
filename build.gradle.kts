@@ -1,5 +1,14 @@
 plugins {
     id("java") apply true
+    alias(libs.plugins.sonarqube) apply true
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "mortenboettger_bachelorthesis-java")
+        property("sonar.organization", "mboettger")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
 }
 
 allprojects {

@@ -9,7 +9,7 @@ dependencyResolutionManagement {
             version("flyway", "9.3.1")
             version("hibernate", "6.1.3.Final")
             version("h2", "2.1.214")
-            version("sonarqube", "3.4.0.2513")
+            version("sonarqube", "4.2.1.3168")
 
             plugin("spring-boot", "org.springframework.boot").versionRef("spring-boot")
             plugin("sonarqube", "org.sonarqube").versionRef("sonarqube")
@@ -19,7 +19,7 @@ dependencyResolutionManagement {
 
             // spring boot
             library("spring-boot-starter", "org.springframework.boot", "spring-boot-starter").withoutVersion()
-            library("spring-boot-web", "org.springframework.boot","spring-boot-starter-web").withoutVersion()
+            library("spring-boot-web", "org.springframework.boot", "spring-boot-starter-web").withoutVersion()
 
             // persistence mysql
             library("persistence-hikari", "org.hibernate.orm", "hibernate-hikaricp").versionRef("hikari")
@@ -33,7 +33,6 @@ dependencyResolutionManagement {
             library("jackson-jsr310", "com.fasterxml.jackson.datatype", "jackson-datatype-jsr310").withoutVersion()
             library("jackson-databind", "com.fasterxml.jackson.core", "jackson-databind").withoutVersion()
             library("jackson-core", "com.fasterxml.jackson.core", "jackson-core").withoutVersion()
-
         }
     }
 }

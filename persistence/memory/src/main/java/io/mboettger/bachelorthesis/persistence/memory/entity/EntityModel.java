@@ -15,7 +15,7 @@ public abstract class EntityModel {
     )
     private String id;
 
-    public EntityModel() {
+    protected EntityModel() {
     }
 
     public String getId() {
