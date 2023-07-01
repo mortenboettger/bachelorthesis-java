@@ -1,3 +1,6 @@
 dependencies {
-    implementation(project(":application-boundary"))
+    implementation(project(":usecase:boundary"))
+
+    implementation(libs.spring.boot.web)
+    implementation(libs.jackson.core)
 }
