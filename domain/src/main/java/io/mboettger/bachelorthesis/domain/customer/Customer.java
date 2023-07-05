@@ -3,6 +3,8 @@ package io.mboettger.bachelorthesis.domain.customer;
 import io.mboettger.bachelorthesis.domain.DomainModel;
 import io.mboettger.bachelorthesis.domain.customer.address.Address;
 
+import java.util.Optional;
+
 public class Customer extends DomainModel {
     private final FirstName firstName;
     private final LastName lastName;
@@ -38,11 +40,11 @@ public class Customer extends DomainModel {
         return address;
     }
 
-    public PhoneNumber getPhoneNumber() {
-        return phoneNumber;
+    public Optional<PhoneNumber> getPhoneNumber() {
+        return Optional.ofNullable(phoneNumber);
     }
 
-    public EmailAddress getEmailAddress() {
-        return emailAddress;
+    public Optional<EmailAddress> getEmailAddress() {
+        return Optional.ofNullable(emailAddress);
     }
 }

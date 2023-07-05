@@ -12,7 +12,7 @@ import org.hibernate.SessionFactory;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static io.mboettger.bachelorthesis.persistence.memory._helper.PersistenceHelper.throwIfNull;
+import static io.mboettger.bachelorthesis.persistence.memory.helper.PersistenceHelper.throwIfNull;
 
 abstract class ReadWriteGatewayImpl<T extends DomainModel, E extends EntityModel> implements ReadWriteGateway<T> {
 
@@ -40,7 +40,11 @@ abstract class ReadWriteGatewayImpl<T extends DomainModel, E extends EntityModel
 
     @Override
     public Stream<T> findAll() {
-        return withTransaction(session -> queryWithCriteria(session, criteriaQuery -> criteriaQuery.select(criteriaQuery.from(entityClass))).getResultStream().map(this::toDomain));
+        return withTransaction(session ->
+                queryWithCriteria(session, criteriaQuery -> criteriaQuery.select(criteriaQuery.from(entityClass)))
+                        .getResultStream()
+                        .map(this::toDomain)
+        );
     }
 
     @Override

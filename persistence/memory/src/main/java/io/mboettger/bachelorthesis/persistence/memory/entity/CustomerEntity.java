@@ -4,6 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+import java.util.Optional;
+
 @Entity
 @Table(name = "customer")
 public class CustomerEntity extends EntityModel {
@@ -109,8 +111,8 @@ public class CustomerEntity extends EntityModel {
         this.houseNumber = houseNumber;
     }
 
-    public String getHouseNumberAddition() {
-        return houseNumberAddition;
+    public Optional<String> getHouseNumberAddition() {
+        return Optional.ofNullable(houseNumberAddition);
     }
 
     public void setHouseNumberAddition(String houseNumberAddition) {
@@ -133,24 +135,24 @@ public class CustomerEntity extends EntityModel {
         this.city = city;
     }
 
-    public String getDistrict() {
-        return district;
+    public Optional<String> getDistrict() {
+        return Optional.ofNullable(district);
     }
 
     public void setDistrict(String district) {
         this.district = district;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public Optional<String> getPhoneNumber() {
+        return Optional.ofNullable(phoneNumber);
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public Optional<String> getEmailAddress() {
+        return Optional.ofNullable(emailAddress);
     }
 
     public void setEmailAddress(String emailAddress) {

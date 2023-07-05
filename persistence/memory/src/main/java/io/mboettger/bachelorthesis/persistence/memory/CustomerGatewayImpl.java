@@ -6,7 +6,7 @@ import io.mboettger.bachelorthesis.persistence.gateway.CustomerGateway;
 import io.mboettger.bachelorthesis.persistence.memory.entity.CustomerEntity;
 import org.hibernate.SessionFactory;
 
-import static io.mboettger.bachelorthesis.persistence.memory._helper.PersistenceHelper.throwIfNull;
+import static io.mboettger.bachelorthesis.persistence.memory.helper.PersistenceHelper.throwIfNull;
 
 public class CustomerGatewayImpl extends ReadWriteGatewayImpl<Customer, CustomerEntity> implements CustomerGateway {
     public CustomerGatewayImpl(SessionFactory sessionFactory) {
@@ -22,10 +22,14 @@ public class CustomerGatewayImpl extends ReadWriteGatewayImpl<Customer, Customer
         entity.setLastName(data.getLastName().value());
         entity.setStreet(data.getAddress().street().value());
         entity.setHouseNumber(data.getAddress().houseNumber().value());
-        entity.setHouseNumberAddition(data.getAddress().houseNumberAddition().value()); //null
+        entity.setHouseNumberAddition(
+                data.getAddress().getHouseNumberAddition().map(HouseNumberAddition::value).orElse(null)
+        );
         entity.setPostCode(data.getAddress().postCode().value());
         entity.setCity(data.getAddress().city().value());
-        entity.setDistrict(data.getAddress().district().value()); //null
+        entity.setDistrict(data.getAddress().getDistrict().map(District::value).orElse(null));
+        entity.setPhoneNumber(data.getPhoneNumber().map(PhoneNumber::value).orElse(null));
+        entity.setEmailAddress(data.getEmailAddress().map(EmailAddress::value).orElse(null));
 
         return entity;
     }
@@ -39,13 +43,13 @@ public class CustomerGatewayImpl extends ReadWriteGatewayImpl<Customer, Customer
                 new Address(
                         new Street(data.getStreet()),
                         new HouseNumber(data.getHouseNumber()),
-                        new HouseNumberAddition(data.getHouseNumberAddition()),
+                        data.getHouseNumberAddition().map(HouseNumberAddition::new).orElse(null),
                         new PostCode(data.getPostCode()),
                         new City(data.getCity()),
-                        new District(data.getDistrict())
+                        data.getDistrict().map(District::new).orElse(null)
                 ),
-                new PhoneNumber(data.getPhoneNumber()),
-                new EmailAddress(data.getEmailAddress())
+                data.getPhoneNumber().map(PhoneNumber::new).orElse(null),
+                data.getEmailAddress().map(EmailAddress::new).orElse(null)
         );
     }
 
@@ -54,15 +58,11 @@ public class CustomerGatewayImpl extends ReadWriteGatewayImpl<Customer, Customer
     public Customer findByEmail(EmailAddress emailAddress) {
         throwIfNull(emailAddress);
 
-        var entity = withTransaction(session -> queryWithCriteria(session, criteriaQuery -> {
+        return withTransaction(session -> queryWithCriteria(session, criteriaQuery -> {
             var root = criteriaQuery.from(entityClass);
             return criteriaQuery.where(
                     root.get("emailAddress").in(emailAddress.value()) // no reflection possible
             );
-        })).getResultList().stream().findFirst().orElse(null);
-
-        if (entity != null) {
-            return toDomain(entity);
-        } else return null;
+        })).getResultList().stream().map(this::toDomain).findFirst().orElse(null);
     }
 }

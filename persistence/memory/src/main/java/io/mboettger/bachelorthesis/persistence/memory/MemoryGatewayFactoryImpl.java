@@ -13,20 +13,17 @@ import java.util.Properties;
 
 public class MemoryGatewayFactoryImpl implements GatewayFactory {
 
-    private final Properties properties;
-    private SessionFactory sessionFactory;
-    private Flyway flyway;
+    private final Flyway flyway;
 
-    private Map<Class<? extends Gateway>, ? extends Gateway> gateways;
+    private final Map<Class<? extends Gateway>, ? extends Gateway> gateways;
 
     public MemoryGatewayFactoryImpl(Properties properties) {
-        this.properties = properties;
         var entityManagerFactory = Persistence.createEntityManagerFactory(
                 "bachelorthesis-persistence",
                 properties
         );
         var entityManager = entityManagerFactory.createEntityManager();
-        this.sessionFactory = entityManager.unwrap(Session.class).getSessionFactory();
+        SessionFactory sessionFactory = entityManager.unwrap(Session.class).getSessionFactory();
         this.flyway = Flyway.configure().dataSource(
                 properties.getProperty("hibernate.connection.url"),
                 properties.getProperty("hibernate.connection.username"),

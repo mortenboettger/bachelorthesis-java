@@ -1,4 +1,4 @@
-package io.mboettger.bachelorthesis.persistence.memory._helper;
+package io.mboettger.bachelorthesis.persistence.memory.helper;
 
 import java.util.Arrays;
 import java.util.Objects;

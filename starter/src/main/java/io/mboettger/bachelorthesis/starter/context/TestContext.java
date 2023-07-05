@@ -33,10 +33,10 @@ public class TestContext {
                     new EmailAddress("a@b.cd")
             );
             var customerGateway = gatewayFactory.make(CustomerGateway.class);
-            log.info("Saving " + customer);
+            log.info("Saving {}", customer);
             var saved = customerGateway.save(customer);
-            log.info("Saved " + saved);
-            log.info("Retrieved " + customerGateway.findOne(saved.getId()));
+            log.info("Saved {}", saved);
+            log.info("Retrieved {}", customerGateway.findOne(saved.getId()));
         };
     }
 }
