@@ -5,9 +5,6 @@ import io.mboettger.bachelorthesis.usecase.boundary.usecase.UseCaseErrorMessageC
 import io.mboettger.bachelorthesis.usecase.boundary.usecase.UseCaseUnknownErrorContainer;
 import io.mboettger.bachelorthesis.usecase.boundary.usecase.UseCaseValidationErrorContainer;
 
-import java.util.List;
-import java.util.Map;
-
 public abstract class CreateCustomerResponse implements UseCaseResponse<CreateCustomerResponse.Error> {
 
     private final boolean success;
@@ -15,6 +12,7 @@ public abstract class CreateCustomerResponse implements UseCaseResponse<CreateCu
     protected CreateCustomerResponse(boolean success) {
         this.success = success;
     }
+
     @Override
     public boolean isSuccessful() {
         return success;

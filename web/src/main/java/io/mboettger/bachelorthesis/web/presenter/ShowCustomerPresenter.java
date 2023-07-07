@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
-import java.util.stream.Collectors;
-
 public class ShowCustomerPresenter extends RestPresenter<CustomerResponseV1, ShowCustomerResponse, ShowCustomerResponse.Success, ShowCustomerResponse.Error> {
 
     private CustomerResponseV1 model;

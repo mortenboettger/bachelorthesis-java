@@ -16,13 +16,9 @@ import java.util.function.Supplier;
 
 public class UseCaseFactoryImpl implements UseCaseFactory {
 
-    private final GatewayFactory gatewayFactory;
-
     private Map<Class<? extends InputBoundary<?, ?, ?>>, Supplier<? extends InputBoundary<?, ?, ?>>> useCases;
 
     public UseCaseFactoryImpl(GatewayFactory gatewayFactory) {
-        this.gatewayFactory = gatewayFactory;
-
         useCases = Map.of(
                 ShowCustomerUseCase.class, () -> new ShowCustomerUseCaseImpl(gatewayFactory.make(CustomerGateway.class)), // TODO specific gateways?
                 CreateCustomerUseCase.class, () -> new CreateCustomerUseCaseImpl(gatewayFactory.make(CustomerGateway.class))

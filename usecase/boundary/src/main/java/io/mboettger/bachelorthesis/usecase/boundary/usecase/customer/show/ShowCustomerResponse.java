@@ -6,9 +6,6 @@ import io.mboettger.bachelorthesis.usecase.boundary.usecase.UseCaseUnknownErrorC
 import io.mboettger.bachelorthesis.usecase.boundary.usecase.UseCaseValidationErrorContainer;
 import io.mboettger.bachelorthesis.usecase.boundary.usecase.customer.model.CustomerModel;
 
-import java.util.List;
-import java.util.Map;
-
 public class ShowCustomerResponse implements UseCaseResponse<ShowCustomerResponse.Error> {
 
     private final boolean success;
