@@ -19,11 +19,11 @@ public final class AddressConverter {
 
     public static AddressModel toBoundary(Address address) {
         return new AddressModel(
-                address.street().value(),
-                address.houseNumber().value(),
+                address.getStreet().value(),
+                address.getHouseNumber().value(),
                 address.getHouseNumberAddition().map(HouseNumberAddition::value).orElse(null),
-                address.postCode().value(),
-                address.city().value(),
+                address.getPostCode().value(),
+                address.getCity().value(),
                 address.getDistrict().map(District::value).orElse(null)
         );
     }

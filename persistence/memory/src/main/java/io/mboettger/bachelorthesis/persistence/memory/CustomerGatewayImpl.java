@@ -20,13 +20,13 @@ public class CustomerGatewayImpl extends ReadWriteGatewayImpl<Customer, Customer
         entity.setId(data.getId());
         entity.setFirstName(data.getFirstName().value());
         entity.setLastName(data.getLastName().value());
-        entity.setStreet(data.getAddress().street().value());
-        entity.setHouseNumber(data.getAddress().houseNumber().value());
+        entity.setStreet(data.getAddress().getStreet().value());
+        entity.setHouseNumber(data.getAddress().getHouseNumber().value());
         entity.setHouseNumberAddition(
                 data.getAddress().getHouseNumberAddition().map(HouseNumberAddition::value).orElse(null)
         );
-        entity.setPostCode(data.getAddress().postCode().value());
-        entity.setCity(data.getAddress().city().value());
+        entity.setPostCode(data.getAddress().getPostCode().value());
+        entity.setCity(data.getAddress().getCity().value());
         entity.setDistrict(data.getAddress().getDistrict().map(District::value).orElse(null));
         entity.setPhoneNumber(data.getPhoneNumber().map(PhoneNumber::value).orElse(null));
         entity.setEmailAddress(data.getEmailAddress().map(EmailAddress::value).orElse(null));
