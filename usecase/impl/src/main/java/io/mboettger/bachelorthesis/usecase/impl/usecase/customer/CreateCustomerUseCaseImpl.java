@@ -12,13 +12,21 @@ public class CreateCustomerUseCaseImpl implements CreateCustomerUseCase {
 
     private final CustomerGateway customerGateway;
 
-    public CreateCustomerUseCaseImpl(CustomerGateway customerGateway){
+    public CreateCustomerUseCaseImpl(CustomerGateway customerGateway) {
         this.customerGateway = customerGateway;
     }
 
     @Override
     public void execute(CreateCustomerRequest request, OutputBoundary<CreateCustomerResponse, CreateCustomerResponse.Error> presenter) {
-        // TODO: validation
+        if (request.emailAddress() == null || customerGateway.existsByEmail(new EmailAddress(request.emailAddress()))) {
+            presenter.present(new CreateCustomerResponse.Error.RequestValidationFailed(request.emailAddress() + " already in use"));
+            return;
+        }
+
+        if (request.phoneNumber() != null && !request.phoneNumber().matches("^\\+?[1-9][0-9\\-]+$")) {
+            presenter.present(new CreateCustomerResponse.Error.RequestValidationFailed("Malformed phone-number"));
+            return;
+        }
 
         try {
             var customer = new Customer(

@@ -16,10 +16,13 @@ public class ShowCustomerUseCaseImpl implements ShowCustomerUseCase {
 
     @Override
     public void execute(ShowCustomerRequest request, OutputBoundary<ShowCustomerResponse, ShowCustomerResponse.Error> presenter) {
-        // TODO: validation
-
         try {
             if (request instanceof ShowCustomerByIdRequest idRequest) {
+                if (idRequest.customerId() == null) {
+                    presenter.present(new ShowCustomerResponse.Error.RequestValidationFailed("Customer ID can not be empty"));
+                    return;
+                }
+
                 var customer = customerGateway.findOne(idRequest.customerId());
 
                 if (customer != null) {
@@ -28,6 +31,11 @@ public class ShowCustomerUseCaseImpl implements ShowCustomerUseCase {
                     presenter.present(new ShowCustomerResponse.Error.NotFound(idRequest.customerId()));
                 }
             } else if (request instanceof ShowCustomerByEmailAddressRequest emailRequest) {
+                if (emailRequest.emailAddress() == null) {
+                    presenter.present(new ShowCustomerResponse.Error.RequestValidationFailed("E-Mail address can not be empty"));
+                    return;
+                }
+
                 var customer = customerGateway.findByEmail(new EmailAddress(emailRequest.emailAddress()));
 
                 if (customer != null) {

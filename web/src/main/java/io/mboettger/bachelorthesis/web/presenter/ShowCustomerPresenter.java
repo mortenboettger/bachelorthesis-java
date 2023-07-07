@@ -28,12 +28,7 @@ public class ShowCustomerPresenter extends RestPresenter<CustomerResponseV1, Sho
         if (response instanceof ShowCustomerResponse.Error.NotFound error) {
             throw new HttpClientErrorException(HttpStatus.NOT_FOUND, error.getMessage());
         } else if (response instanceof ShowCustomerResponse.Error.RequestValidationFailed error) {
-            var validationErrorMap = error.getValidationErrors();
-            var validationErrors = validationErrorMap.keySet()
-                    .stream()
-                    .map(key -> key + "=" + validationErrorMap.get(key))
-                    .collect(Collectors.joining(", "));
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, validationErrors);
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, error.getValidationError());
         } else {
             throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, response.getMessage());
         }

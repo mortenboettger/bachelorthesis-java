@@ -65,4 +65,9 @@ public class CustomerGatewayImpl extends ReadWriteGatewayImpl<Customer, Customer
             );
         })).getResultList().stream().map(this::toDomain).findFirst().orElse(null);
     }
+
+    @Override
+    public Boolean existsByEmail(EmailAddress emailAddress) {
+        return findByEmail(emailAddress) != null;
+    }
 }

@@ -55,16 +55,16 @@ public class ShowCustomerResponse implements UseCaseResponse<ShowCustomerRespons
         }
 
         public static class RequestValidationFailed extends Error implements UseCaseValidationErrorContainer {
-            private final Map<String, List<String>> validationErrors;
+            private final String validationError;
 
-            public RequestValidationFailed(Map<String, List<String>> validationErrors) {
+            public RequestValidationFailed(String validationError) {
                 super("Invalid request to show a customer");
-                this.validationErrors = validationErrors;
+                this.validationError = validationError;
             }
 
             @Override
-            public Map<String, List<String>> getValidationErrors() {
-                return validationErrors;
+            public String getValidationError() {
+                return validationError;
             }
         }
 

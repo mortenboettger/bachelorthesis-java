@@ -25,12 +25,7 @@ public class CreateCustomerPresenter extends RestPresenter<CreateCustomerRespons
     @Override
     public void failure(CreateCustomerResponse.Error response) {
         if (response instanceof CreateCustomerResponse.Error.RequestValidationFailed error) {
-            var validationErrorMap = error.getValidationErrors();
-            var validationErrors = validationErrorMap.keySet()
-                    .stream()
-                    .map(key -> key + "=" + validationErrorMap.get(key))
-                    .collect(Collectors.joining(", "));
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, validationErrors);
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, error.getValidationError());
         } else {
             throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, response.getMessage());
         }
