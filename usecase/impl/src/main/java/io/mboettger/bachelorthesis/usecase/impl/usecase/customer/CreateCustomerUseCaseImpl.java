@@ -18,12 +18,12 @@ public class CreateCustomerUseCaseImpl implements CreateCustomerUseCase {
 
     @Override
     public void execute(CreateCustomerRequest request, OutputBoundary<CreateCustomerResponse, CreateCustomerResponse.Error> presenter) {
-        if (request.emailAddress() == null || customerGateway.existsByEmail(new EmailAddress(request.emailAddress()))) {
-            presenter.present(new CreateCustomerResponse.Error.RequestValidationFailed(request.emailAddress() + " already in use"));
+        if (request.getEmailAddress().isPresent() && customerGateway.existsByEmail(new EmailAddress(request.getEmailAddress().get()))) {
+            presenter.present(new CreateCustomerResponse.Error.RequestValidationFailed(request.getEmailAddress().get() + " already in use"));
             return;
         }
 
-        if (request.phoneNumber() != null && !request.phoneNumber().matches("^\\+?[1-9][0-9\\-]+$")) {
+        if (request.getPhoneNumber().isPresent() && !request.getPhoneNumber().get().matches("^\\+?[1-9][0-9\\-]+$")) {
             presenter.present(new CreateCustomerResponse.Error.RequestValidationFailed("Malformed phone-number"));
             return;
         }
@@ -31,9 +31,9 @@ public class CreateCustomerUseCaseImpl implements CreateCustomerUseCase {
         try {
             var customer = new Customer(
                     null,
-                    new FirstName(request.firstName()),
-                    new LastName(request.lastName()),
-                    AddressConverter.toDomain(request.address()),
+                    new FirstName(request.getFirstName()),
+                    new LastName(request.getLastName()),
+                    AddressConverter.toDomain(request.getAddress()),
                     request.getPhoneNumber().map(PhoneNumber::new).orElse(null),
                     request.getEmailAddress().map(EmailAddress::new).orElse(null)
             );

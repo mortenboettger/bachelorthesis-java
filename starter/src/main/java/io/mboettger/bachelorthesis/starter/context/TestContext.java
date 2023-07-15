@@ -29,7 +29,7 @@ public class TestContext {
                             new City("Musterstadt"),
                             new District("Musterhausen")
                     ),
-                    new PhoneNumber("12345"),
+                    new PhoneNumber("12345678"),
                     new EmailAddress("a@b.cd")
             );
             var customerGateway = gatewayFactory.make(CustomerGateway.class);

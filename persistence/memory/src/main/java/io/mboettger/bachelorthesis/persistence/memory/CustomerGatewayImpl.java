@@ -67,7 +67,7 @@ public class CustomerGatewayImpl extends ReadWriteGatewayImpl<Customer, Customer
     }
 
     @Override
-    public Boolean existsByEmail(EmailAddress emailAddress) {
+    public boolean existsByEmail(EmailAddress emailAddress) {
         return findByEmail(emailAddress) != null;
     }
 }

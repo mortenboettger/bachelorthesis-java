@@ -8,12 +8,12 @@ public final class AddressConverter {
 
     public static AddressV1 toWebV1(AddressModel address) {
         return new AddressV1(
-                address.street(),
-                address.houseNumber(),
-                address.houseNumberAddition(),
-                address.postCode(),
-                address.city(),
-                address.district()
+                address.getStreet(),
+                address.getHouseNumber(),
+                address.getHouseNumberAddition().orElse(null),
+                address.getPostCode(),
+                address.getCity(),
+                address.getDistrict().orElse(null)
         );
     }
 

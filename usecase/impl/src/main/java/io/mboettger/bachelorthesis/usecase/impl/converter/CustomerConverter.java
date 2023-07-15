@@ -8,10 +8,10 @@ public final class CustomerConverter {
 
     public static Customer toDomain(CustomerModel customer) {
         return new Customer(
-                customer.id(),
-                new FirstName(customer.firstName()),
-                new LastName(customer.lastName()),
-                AddressConverter.toDomain(customer.address()),
+                customer.getId(),
+                new FirstName(customer.getFirstName()),
+                new LastName(customer.getLastName()),
+                AddressConverter.toDomain(customer.getAddress()),
                 customer.getPhoneNumber().map(PhoneNumber::new).orElse(null),
                 customer.getEmailAddress().map(EmailAddress::new).orElse(null)
         );

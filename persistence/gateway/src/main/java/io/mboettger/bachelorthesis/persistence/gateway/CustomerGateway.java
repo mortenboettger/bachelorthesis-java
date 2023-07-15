@@ -6,5 +6,5 @@ import io.mboettger.bachelorthesis.domain.customer.EmailAddress;
 public interface CustomerGateway extends ReadWriteGateway<Customer> {
     Customer findByEmail(EmailAddress emailAddress);
 
-    Boolean existsByEmail(EmailAddress emailAddress);
+    boolean existsByEmail(EmailAddress emailAddress);
 }

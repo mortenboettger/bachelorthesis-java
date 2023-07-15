@@ -10,12 +10,12 @@ public final class CustomerConverter {
 
     public static CustomerResponseV1 toCustoemrResponseV1(CustomerModel customer) {
         return new CustomerResponseV1(
-                customer.id(),
-                customer.firstName(),
-                customer.lastName(),
-                AddressConverter.toWebV1(customer.address()),
-                customer.phoneNumber(),
-                customer.emailAddress()
+                customer.getId(),
+                customer.getFirstName(),
+                customer.getLastName(),
+                AddressConverter.toWebV1(customer.getAddress()),
+                customer.getPhoneNumber().orElse(null),
+                customer.getEmailAddress().orElse(null)
         );
     }
 

@@ -1,7 +1,6 @@
 package io.mboettger.bachelorthesis.web.model;
 
 import java.io.Serializable;
-import java.util.Optional;
 
 public record AddressV1(
         String street,
@@ -10,12 +9,4 @@ public record AddressV1(
         String postCode,
         String city,
         String district
-) implements Serializable {
-    public Optional<String> getHouseNumberAddition() {
-        return Optional.ofNullable(this.houseNumberAddition);
-    }
-
-    public Optional<String> getDistrict() {
-        return Optional.ofNullable(this.district);
-    }
-}
+) implements Serializable { }

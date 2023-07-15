@@ -8,11 +8,11 @@ public final class AddressConverter {
 
     public static Address toDomain(AddressModel address) {
         return new Address(
-                new Street(address.street()),
-                new HouseNumber(address.houseNumber()),
+                new Street(address.getStreet()),
+                new HouseNumber(address.getHouseNumber()),
                 address.getHouseNumberAddition().map(HouseNumberAddition::new).orElse(null),
-                new PostCode(address.postCode()),
-                new City(address.city()),
+                new PostCode(address.getPostCode()),
+                new City(address.getCity()),
                 address.getDistrict().map(District::new).orElse(null)
         );
     }
